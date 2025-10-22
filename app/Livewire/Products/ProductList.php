@@ -98,6 +98,6 @@ class ProductList extends Component
         return view('livewire.products.product-list', [
             'products' => $this->products,
             'categories' => $this->categories,
-        ])->layout('layouts.app');
+        ])->layout('components.layouts.app');
     }
 }

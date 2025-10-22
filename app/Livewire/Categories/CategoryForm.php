@@ -70,6 +70,6 @@ class CategoryForm extends Component
      */
     public function render()
     {
-        return view('livewire.categories.category-form')->layout('layouts.app');
+        return view('livewire.categories.category-form')->layout('components.layouts.app');
     }
 }

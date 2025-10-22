@@ -16,25 +16,12 @@
         <nav class="bg-white shadow border-b border-gray-200">
             <div class="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
                 <div class="flex justify-between items-center h-12">
-                    <!-- Logo -->
-                    <a href="{{ route('home') }}" class="flex items-center space-x-1 group">
-                        {{-- <div class="w-2 h-2 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-md flex items-center justify-center shadow-sm group-hover:shadow transition-all duration-200">
-                            <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
-                            </svg>
-                        </div> --}}
-                        <span class="text-sm font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                            {{ config('app.name', 'Laravel') }}
-                        </span>
-                    </a>
-
-                    <!-- Links -->
                     @auth
                         <div class="hidden md:flex items-center space-x-1">
                             <a href="{{ route('products.index') }}" class="flex items-center space-x-0.5 px-2 py-0.5 rounded-md text-xs font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-all duration-150">
-                                <svg class="w-2 h-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                {{-- <svg class="w-2 h-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M3 12h18M3 17h18"/>
-                                </svg>
+                                </svg> --}}
                                 <span>Productes</span>
                             </a>
                             <a href="{{ route('categories.index') }}" class="flex items-center space-x-0.5 px-2 py-0.5 rounded-md text-xs font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-all duration-150">
@@ -50,9 +37,9 @@
                     <div class="flex items-center space-x-1">
                         @auth
                             <div class="hidden md:flex items-center space-x-1">
-                                <span class="px-2 py-0.5 bg-blue-50 text-blue-700 text-xs rounded-full font-medium">
+                                {{-- <span class="px-2 py-0.5 bg-blue-50 text-blue-700 text-xs rounded-full font-medium">
                                     {{ auth()->user()->name ?? 'Usuari' }}
-                                </span>
+                                </span> --}}
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <button type="submit" class="flex items-center space-x-0.5 px-2 py-0.5 text-xs text-gray-700 hover:text-red-600 hover:bg-red-50 rounded-md transition-all duration-150">

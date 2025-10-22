@@ -83,6 +83,6 @@ class CategoryEdit extends Component
      */
     public function render()
     {
-        return view('livewire.categories.category-edit')->layout('layouts.app');
+        return view('livewire.categories.category-edit')->layout('components.layouts.app');
     }
 }

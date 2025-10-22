@@ -83,6 +83,6 @@ class CategoryList extends Component
     {
         return view('livewire.categories.category-list', [
             'categories' => $this->categories,
-        ])->layout('layouts.app');
+        ])->layout('components.layouts.app');
     }
 }
