@@ -5,11 +5,24 @@ namespace App\Livewire\Categories;
 use App\Models\Category;
 use Livewire\Component;
 
-class CategoryForm extends Component
+class CategoryEdit extends Component
 {
+    public Category $category;
+
     public string $name = '';
     public string $description = '';
     public bool $is_active = true;
+
+    /**
+     * Mount the component.
+     */
+    public function mount(Category $category): void
+    {
+        $this->category = $category;
+        $this->name = $category->name;
+        $this->description = $category->description ?? '';
+        $this->is_active = $category->is_active;
+    }
 
     /**
      * Validation rules.
@@ -17,7 +30,7 @@ class CategoryForm extends Component
     protected function rules(): array
     {
         return [
-            'name' => 'required|string|max:255|unique:categories,name',
+            'name' => 'required|string|max:255|unique:categories,name,' . $this->category->id,
             'description' => 'nullable|string',
             'is_active' => 'boolean',
         ];
@@ -36,24 +49,24 @@ class CategoryForm extends Component
     }
 
     /**
-     * Save the category.
+     * Update the category.
      */
     public function save(): void
     {
         $this->validate();
 
         try {
-            Category::create([
+            $this->category->update([
                 'name' => $this->name,
                 'description' => $this->description,
                 'is_active' => $this->is_active,
             ]);
 
-            session()->flash('success', 'Categoría creada correctamente.');
+            session()->flash('success', 'Categoría actualizada correctamente.');
 
             $this->redirect(route('categories.index'), navigate: true);
         } catch (\Exception $e) {
-            session()->flash('error', 'Error al crear la categoría.');
+            session()->flash('error', 'Error al actualizar la categoría.');
         }
     }
 
@@ -70,6 +83,6 @@ class CategoryForm extends Component
      */
     public function render()
     {
-        return view('livewire.categories.category-form')->layout('layouts.app');
+        return view('livewire.categories.category-edit')->layout('layouts.app');
     }
 }

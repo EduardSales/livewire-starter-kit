@@ -9,9 +9,9 @@
             </a>
             <div>
                 <h1 class="text-3xl font-bold text-gray-900 flex items-center gap-2">
-                    <span>Crear Nuevo Producto</span>
+                    <span>Editar Producto</span>
                 </h1>
-                <p class="text-gray-600 mt-1">Complete el formulario para agregar un nuevo producto a tu inventario</p>
+                <p class="text-gray-600 mt-1">Modifique los campos que desea actualizar</p>
             </div>
         </div>
     </div>
@@ -160,7 +160,7 @@
                             <svg class="size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                             </svg>
-                            Crear Producto
+                            Actualizar Producto
                         </flux:button>
 
                         <flux:button wire:click="cancel" variant="ghost">

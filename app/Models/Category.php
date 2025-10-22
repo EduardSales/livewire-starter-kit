@@ -8,31 +8,43 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model
 {
-   use HasFactory;
+    use HasFactory;
 
-   protected $fillable = [
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
         'name',
         'description',
         'is_active',
     ];
 
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
     protected $casts = [
         'is_active' => 'boolean',
     ];
 
-    public function getProducts(): HasMany
+    /**
+     * Get all products for this category.
+     */
+    public function products(): HasMany
     {
         return $this->hasMany(Product::class);
     }
+
     /**
-     * Get the number of active products.
+     * Get the count of active products for this category.
+     *
+     * @return int
      */
     public function getActiveProductsCountAttribute(): int
     {
-        return $this->hasMany(Product::class)->where('is_active', true)->count();
-    }
-    public static function getAllCategories()
-    {
-        return self::orderBy('name')->get();
+        return $this->products()->where('is_active', true)->count();
     }
 }

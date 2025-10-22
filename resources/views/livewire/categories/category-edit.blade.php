@@ -9,9 +9,9 @@
             </a>
             <div>
                 <h1 class="text-3xl font-bold text-gray-900 flex items-center gap-2">
-                    <span>Crear Nueva Categoría</span>
+                    <span>Editar Categoría</span>
                 </h1>
-                <p class="text-gray-600 mt-1">Complete el formulario para agregar una nueva categoría</p>
+                <p class="text-gray-600 mt-1">Modifique los campos que desea actualizar</p>
             </div>
         </div>
     </div>
@@ -70,6 +70,57 @@
                         </div>
                     </div>
 
+                    {{-- Products Stats Section --}}
+                    <div>
+                        <div class="flex items-center gap-2 mb-4 pb-2 border-b-2 border-blue-500">
+                            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                            </svg>
+                            <h2 class="text-lg font-bold text-gray-900">Estadísticas de Productos</h2>
+                        </div>
+
+                        <div class="p-5 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg border border-blue-200">
+                            <div class="flex items-center gap-4">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-3">
+                                        <div class="p-3 bg-white rounded-lg shadow-sm">
+                                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-medium text-gray-600">Total de Productos</p>
+                                            <p class="text-2xl font-bold text-gray-900">{{ $category->products->count() }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-3">
+                                        <div class="p-3 bg-white rounded-lg shadow-sm">
+                                            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-medium text-gray-600">Productos Activos</p>
+                                            <p class="text-2xl font-bold text-green-700">{{ $category->active_products_count }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @if($category->products->count() > 0)
+                                <div class="mt-4 pt-4 border-t border-blue-200">
+                                    <p class="text-sm text-gray-700 flex items-center gap-1.5">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                        Esta categoría tiene productos asociados. Los cambios afectarán a todos los productos de esta categoría.
+                                    </p>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+
                     {{-- Status Section --}}
                     <div>
                         <div class="flex items-center gap-2 mb-4 pb-2 border-b-2 border-green-500">
@@ -99,7 +150,7 @@
                             <svg class="size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                             </svg>
-                            Crear Categoría
+                            Actualizar Categoría
                         </flux:button>
 
                         <flux:button wire:click="cancel" variant="ghost">

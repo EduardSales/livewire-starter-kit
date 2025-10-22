@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedInteger('stock')->default(0);
             
             $table->foreignId('category_id')
-                ->constrained('categories') // apunta a categories.id
+                ->constrained('categories') 
                 ->onDelete('cascade');
             
             $table->boolean('is_active')->default(true);

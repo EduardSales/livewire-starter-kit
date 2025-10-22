@@ -5,13 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Builder;
 
 class Product extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
     protected $fillable = [
-        'name', 
+        'name',
         'description',
         'price',
         'stock',
@@ -19,39 +25,39 @@ class Product extends Model
         'is_active',
     ];
 
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
     protected $casts = [
         'price' => 'decimal:2',
         'is_active' => 'boolean',
     ];
 
-    // Relació: un producte pertany a una categoria
+    /**
+     * Get the category that owns the product.
+     */
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
-    // Scope per obtenir només productes actius
-    public function scopeActive($query)
+    /**
+     * Scope a query to only include active products.
+     */
+    public function scopeActive(Builder $query): Builder
     {
         return $query->where('is_active', true);
     }
 
-    // Accessor per formatar el preu
+    /**
+     * Get the formatted price with Euro symbol.
+     *
+     * @return string
+     */
     public function getFormattedPriceAttribute(): string
     {
-        return '€ ' . number_format($this->price, 2, '.', '');
-    }
-    
-    public static function getAllProducts()
-    {
-        return self::with('category')->orderBy('name')->get();
-    }
-
-    /**
-     * Retorna els productes actius
-     */
-    public static function getActiveProducts()
-    {
-        return self::where('is_active', true)->with('category')->orderBy('name')->get();
+        return '€ ' . number_format($this->price, 2);
     }
 }

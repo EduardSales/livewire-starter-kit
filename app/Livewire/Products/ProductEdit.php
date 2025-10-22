@@ -6,14 +6,30 @@ use App\Models\Category;
 use App\Models\Product;
 use Livewire\Component;
 
-class ProductForm extends Component
+class ProductEdit extends Component
 {
+    public Product $product;
+
     public string $name = '';
     public string $description = '';
     public string $price = '';
     public int $stock = 0;
     public ?int $category_id = null;
     public bool $is_active = true;
+
+    /**
+     * Mount the component.
+     */
+    public function mount(Product $product): void
+    {
+        $this->product = $product;
+        $this->name = $product->name;
+        $this->description = $product->description ?? '';
+        $this->price = (string) $product->price;
+        $this->stock = $product->stock;
+        $this->category_id = $product->category_id;
+        $this->is_active = $product->is_active;
+    }
 
     /**
      * Validation rules.
@@ -51,14 +67,14 @@ class ProductForm extends Component
     }
 
     /**
-     * Save the product.
+     * Update the product.
      */
     public function save(): void
     {
         $this->validate();
 
         try {
-            Product::create([
+            $this->product->update([
                 'name' => $this->name,
                 'description' => $this->description,
                 'price' => $this->price,
@@ -67,11 +83,11 @@ class ProductForm extends Component
                 'is_active' => $this->is_active,
             ]);
 
-            session()->flash('success', 'Producto creado correctamente.');
+            session()->flash('success', 'Producto actualizado correctamente.');
 
             $this->redirect(route('products.index'), navigate: true);
         } catch (\Exception $e) {
-            session()->flash('error', 'Error al crear el producto.');
+            session()->flash('error', 'Error al actualizar el producto.');
         }
     }
 
@@ -96,7 +112,7 @@ class ProductForm extends Component
      */
     public function render()
     {
-        return view('livewire.products.product-form', [
+        return view('livewire.products.product-edit', [
             'categories' => $this->categories,
         ])->layout('layouts.app');
     }

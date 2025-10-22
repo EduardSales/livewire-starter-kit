@@ -2,25 +2,31 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\Category;
 use App\Models\Product;
+use Illuminate\Database\Seeder;
 
 class ProductSeeder extends Seeder
 {
-    public function run()
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
     {
-        // Crear 10 categories
+        // Create 10 categories
         $categories = Category::factory()->count(10)->create();
 
-        // Crear 50 productes distribuïts entre categories
-        foreach ($categories as $category) {
-            // Assegurar que cada categoria té almenys 2 productes
-            Product::factory()->count(2)->for($category)->create();
-        }
+        // Ensure each category has at least 2 products (10 categories * 2 = 20 products)
+        $categories->each(function ($category) {
+            Product::factory()->count(2)->create([
+                'category_id' => $category->id,
+            ]);
+        });
 
-        // Crear els restants productes aleatoris fins a 50
-        $remaining = 50 - ($categories->count() * 2);
-        Product::factory()->count($remaining)->create();
+        // Create the remaining 30 products (50 total - 20 already created = 30 remaining)
+        // Distribute them randomly among all categories
+        Product::factory()->count(30)->create([
+            'category_id' => $categories->random()->id,
+        ]);
     }
 }

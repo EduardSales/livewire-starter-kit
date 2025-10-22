@@ -1,62 +1,88 @@
 <?php
 
-namespace App\Http\Livewire\Categories;
+namespace App\Livewire\Categories;
 
+use App\Models\Category;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\Category;
 
 class CategoryList extends Component
 {
     use WithPagination;
 
-    public $search = '';
-    public $statusFilter = ''; // '', '1', '0'
+    public string $search = '';
+    public ?string $statusFilter = null;
 
-    protected $paginationTheme = 'tailwind';
-
-    public function updatingSearch()
+    /**
+     * Reset pagination when filters change.
+     */
+    public function updatingSearch(): void
     {
         $this->resetPage();
     }
 
-    public function updatingStatusFilter()
+    public function updatingStatusFilter(): void
     {
         $this->resetPage();
     }
 
-    public function delete($id)
+    /**
+     * Clear all filters.
+     */
+    public function clearFilters(): void
     {
-        $category = Category::find($id);
+        $this->reset(['search', 'statusFilter']);
+        $this->resetPage();
+    }
 
-        if (! $category) {
-            session()->flash('error', 'Categoria no trobada.');
-            return;
+    /**
+     * Delete a category.
+     */
+    public function deleteCategory(int $categoryId): void
+    {
+        try {
+            $category = Category::findOrFail($categoryId);
+
+            // Check if category has products
+            if ($category->products()->count() > 0) {
+                session()->flash('error', 'No se puede eliminar una categoría que tiene productos asociados.');
+                return;
+            }
+
+            $category->delete();
+            session()->flash('success', 'Categoría eliminada correctamente.');
+        } catch (\Exception $e) {
+            session()->flash('error', 'Error al eliminar la categoría.');
+        }
+    }
+
+    /**
+     * Get filtered categories.
+     */
+    public function getCategoriesProperty()
+    {
+        $query = Category::query()->withCount('products');
+
+        // Apply search filter
+        if ($this->search) {
+            $query->where('name', 'like', '%' . $this->search . '%');
         }
 
-        // Elimina la categoria i els productes associats (si tens cascade a la DB)
-        $category->delete();
+        // Apply status filter
+        if ($this->statusFilter !== null && $this->statusFilter !== '') {
+            $query->where('is_active', $this->statusFilter === '1');
+        }
 
-        session()->flash('success', 'Categoria eliminada correctament!');
-        $this->resetPage();
+        return $query->latest()->paginate(10);
     }
 
+    /**
+     * Render the component.
+     */
     public function render()
     {
-        $query = Category::query();
-
-        if ($this->search) {
-            $query->where('name', 'like', '%'.$this->search.'%');
-        }
-
-        if ($this->statusFilter !== '') {
-            $query->where('is_active', $this->statusFilter == '1');
-        }
-
-        $categories = $query->orderBy('name')->paginate(10);
-
         return view('livewire.categories.category-list', [
-            'categories' => $categories,
-        ]);
+            'categories' => $this->categories,
+        ])->layout('layouts.app');
     }
 }
