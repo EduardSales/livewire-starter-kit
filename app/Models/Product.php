@@ -41,4 +41,17 @@ class Product extends Model
     {
         return '€ ' . number_format($this->price, 2, '.', '');
     }
+    
+    public static function getAllProducts()
+    {
+        return self::with('category')->orderBy('name')->get();
+    }
+
+    /**
+     * Retorna els productes actius
+     */
+    public static function getActiveProducts()
+    {
+        return self::where('is_active', true)->with('category')->orderBy('name')->get();
+    }
 }

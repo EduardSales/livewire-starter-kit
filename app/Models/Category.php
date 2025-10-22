@@ -17,12 +17,9 @@ class Category extends Model
     ];
 
     protected $casts = [
-
         'is_active' => 'boolean',
     ];
 
-
-    
     public function getProducts(): HasMany
     {
         return $this->hasMany(Product::class);
@@ -33,5 +30,9 @@ class Category extends Model
     public function getActiveProductsCountAttribute(): int
     {
         return $this->hasMany(Product::class)->where('is_active', true)->count();
+    }
+    public static function getAllCategories()
+    {
+        return self::orderBy('name')->get();
     }
 }
