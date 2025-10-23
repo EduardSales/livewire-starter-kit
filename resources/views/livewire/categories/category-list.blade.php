@@ -5,9 +5,6 @@
             <div>
                 <h1 class="text-3xl font-bold text-gray-900 mb-2 flex items-center gap-3">
                     <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center shadow-lg">
-                        {{-- <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
-                        </svg> --}}
                     </div>
                     <span>Gestión de Categorías</span>
                 </h1>
@@ -43,9 +40,6 @@
         {{-- Filters Card --}}
         <div class="bg-white rounded-xl shadow-md p-6 border border-gray-200">
             <div class="flex items-center gap-2 mb-4">
-                {{-- <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
-                </svg> --}}
                 <h3 class="text-sm font-semibold text-gray-700 uppercase tracking-wide">Filtros</h3>
             </div>
 
@@ -84,16 +78,16 @@
 
     {{-- Categories Table --}}
     <div class="overflow-x-auto bg-white rounded-xl shadow-lg border border-gray-200">
-        <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gradient-to-r from-gray-50 to-gray-100">
-                <tr>
-                    <th class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Nombre</th>
-                    <th class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Descripción</th>
-                    <th class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Productos</th>
-                    <th class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Estado</th>
-                    <th class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Acciones</th>
-                </tr>
-            </thead>
+        <table class="min-w-full border-separate border-spacing-x-4 divide-y divide-gray-200">
+        <thead class="bg-gradient-to-r from-gray-50 to-gray-100">
+            <tr>
+                <th class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider w-1/5">Nombre</th>
+                <th class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider w-2/5">Descripción</th>
+                <th class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider w-1/5">Productos</th>
+                <th class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider w-1/6">Estado</th>
+                <th class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider w-1/6">Acciones</th>
+            </tr>
+        </thead>
             <tbody class="bg-white divide-y divide-gray-200">
                 @forelse($categories as $category)
                     <tr wire:key="category-{{ $category->id }}" class="hover:bg-purple-50/50 transition-colors duration-150">
@@ -118,16 +112,10 @@
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="flex items-center gap-2">
                                 <span class="inline-flex items-center px-3 py-1.5 text-xs font-semibold rounded-lg bg-gradient-to-r from-blue-100 to-indigo-100 text-blue-800 shadow-sm">
-                                    <svg class="w-3 h-3 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
-                                    </svg>
                                     {{ $category->products_count }} total
                                 </span>
                                 @if($category->active_products_count > 0)
                                     <span class="inline-flex items-center px-3 py-1.5 text-xs font-semibold rounded-lg bg-gradient-to-r from-green-100 to-emerald-100 text-green-800 shadow-sm">
-                                        <svg class="w-3 h-3 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                        </svg>
                                         {{ $category->active_products_count }} activos
                                     </span>
                                 @endif
@@ -137,16 +125,10 @@
                         <td class="px-6 py-4 whitespace-nowrap">
                             @if($category->is_active)
                                 <span class="inline-flex items-center px-3 py-1.5 text-xs font-semibold rounded-lg bg-gradient-to-r from-green-100 to-emerald-100 text-green-800 shadow-sm">
-                                    <svg class="w-3 h-3 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                    </svg>
                                     Activa
                                 </span>
                             @else
                                 <span class="inline-flex items-center px-3 py-1.5 text-xs font-semibold rounded-lg bg-gradient-to-r from-red-100 to-pink-100 text-red-800 shadow-sm">
-                                    <svg class="w-3 h-3 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                    </svg>
                                     Inactiva
                                 </span>
                             @endif
